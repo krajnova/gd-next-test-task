@@ -1,8 +1,7 @@
 Here is my solution to GD-Next test task.
 - to run project locally use `npm i` and `npm run dev`
-- to update github pages run `npm run deploy`
 
-You can check deployed version [here](https://krajnova.github.io/gd-next-test-task/)
+Unfortunately, with service workers it's troublesome to create preview on gh-pages so project should be run locally.
 
 ## Test task text
 We are building an API-gateway. Because different systems we connect to require different initial parameters to make requests, our API-gateway needs to ask the user for some extra inputs in order to make a call to the system. For example, in the database we have users' First name and Last name.
@@ -28,7 +27,7 @@ We would like to see:
 Do not spend more than 3 hours on the task. 
 Visuals may look ugly, that's OK, we are interested in how you think.
 
-### How I think I can improve this code, but it'll probably take more time that stated in task 
+### How I think I can improve this code, but it'll probably take more time than stated in task 
 1. Validation and multiple fields for address input.
 2. Styling.
 3. Schema for positioning inputs.
