@@ -1,19 +1,31 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {fetchUser, fetchUserForm, updateUserData} from "../api/fetch.ts";
 import "./index.css";
 import TextInput from "./TextInput.tsx";
-import Select from "./Select.tsx";
+import Select, {Option} from "./Select.tsx";
 import CountrySelect from "./CountrySelect.tsx";
 import DateField from "./DateField.tsx";
 
+type Field = {
+  name: string,
+  disabled: boolean,
+  required: boolean,
+  label: string,
+  type: string,
+  options?: Option[],
+};
+type ErrorType = Record<string, {
+  message: string,
+}>;
+
 const UserForm = () => {
-  const [schema, setSchema] = useState([]);
-  const [formState, setFormState] = useState({});
-  const [formErrors, setFormErrors] = useState({});
+  const [schema, setSchema] = useState<Field[]>([]);
+  const [formState, setFormState] = useState<{[key: string]: string}>({});
+  const [formErrors, setFormErrors] = useState<ErrorType>({});
   const [isDataUpdated, setIsDataUpdated] = useState(false);
 
   const validateForm = () => {
-    const validationErrors = {};
+    const validationErrors: ErrorType = {};
     schema.forEach(field => {
       if (field.required && !formState[field.name]) {
         validationErrors[field.name] = {
@@ -24,7 +36,7 @@ const UserForm = () => {
     return validationErrors;
   };
 
-  const submitHandler = async (e) => {
+  const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     const errors = validateForm();
 
@@ -41,7 +53,7 @@ const UserForm = () => {
   useEffect(() => {
     fetchUser("1").then(response => response.json()).then(data => {
       const initialFields = Object.entries(data).map(value => value[0]);
-      fetchUserForm(initialFields).then(response => response.json()).then(schema => {
+      fetchUserForm(initialFields).then(response => response.json()).then((schema: Field[]) => {
         setSchema(schema);
         const initialState = Object.fromEntries(schema.map(field => [field.name, ""]));
         setFormState(prevForm => ({
@@ -56,7 +68,7 @@ const UserForm = () => {
 
   if (isDataUpdated) return <p>Thank you for filling form!</p>
 
-  const changeHandler = (inputName, newValue) => setFormState(prevState => ({
+  const changeHandler = (inputName: string, newValue: string) => setFormState(prevState => ({
     ...prevState,
     [inputName]: newValue,
   }));
@@ -73,7 +85,6 @@ const UserForm = () => {
               key={field.name}
               fieldName={field.name}
               disabled={field.disabled}
-              type="text"
               value={formState[field.name]}
               changeHandler={changeHandler}
               label={field.label}
@@ -87,7 +98,7 @@ const UserForm = () => {
               changeHandler={changeHandler}
               disabled={field.disabled}
               label={field.label}
-              options={field.options}
+              options={field.options || []}
               validationError={formErrors[field.name]}
             />
           case "date":
@@ -106,7 +117,7 @@ const UserForm = () => {
               changeHandler={changeHandler}
               label={field.label}
               disabled={field.disabled}
-              validationError={formErrors[field.name]}
+              validationError={formErrors[field.name] && formErrors[field.name]}
             />
           default:
             console.error("Unknown type of input");

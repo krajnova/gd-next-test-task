@@ -1,6 +1,6 @@
 import {http, HttpResponse} from 'msw'
 
-const updateData = (data) => console.log(data);
+const updateData = (data: unknown) => console.log(data);
 export const handlers = [
   http.get('http://test-api/user/:id', ({params}) => {
     const {id} = params

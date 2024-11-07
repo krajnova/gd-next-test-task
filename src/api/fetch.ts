@@ -7,7 +7,7 @@ export const fetchUserForm = async (fields: string[]) => await fetch(`http://tes
   }),
 });
 
-export const updateUserData = async (form) => await fetch(`http://test-api/complete-user-form`, {
+export const updateUserData = async (form: Record<string, string>) => await fetch(`http://test-api/complete-user-form`, {
   method: 'POST',
   body: JSON.stringify({
     form,

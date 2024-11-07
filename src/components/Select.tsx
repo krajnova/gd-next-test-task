@@ -1,6 +1,4 @@
-import * as React from "react";
-
-type Option = {
+export type Option = {
   label: string;
   value: string;
 };

@@ -2,6 +2,8 @@ Here is my solution to GD-Next test task.
 - to run project locally use `npm i` and `npm run dev`
 - to update github pages run `npm run deploy`
 
+You can check deployed version [here](https://krajnova.github.io/gd-next-test-task/)
+
 ## Test task text
 We are building an API-gateway. Because different systems we connect to require different initial parameters to make requests, our API-gateway needs to ask the user for some extra inputs in order to make a call to the system. For example, in the database we have users' First name and Last name.
 In order to connect to some system, we need to provide:
